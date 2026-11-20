@@ -1,7 +1,9 @@
 package com.example.server_components.controller;
 
-import com.example.server_components.model.User;
+import com.example.server_components.dto.UserRequestDto;
+import com.example.server_components.dto.UserResponseDto;
 import com.example.server_components.service.ExpenseService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,19 +20,18 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
         return ResponseEntity.ok(expenseService.getAllUsers());
     }
 
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<User> getUserById(@PathVariable("user_id") Long userId) {
+    public ResponseEntity<UserResponseDto> getUserById(@PathVariable("user_id") Long userId) {
         return ResponseEntity.ok(expenseService.getUserById(userId));
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestBody User request) {
-        User created = expenseService.createUser(request.getName());
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    public ResponseEntity<UserResponseDto> createUser(@Valid @RequestBody UserRequestDto request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(expenseService.createUser(request));
     }
 
     @DeleteMapping("/user/{user_id}")
