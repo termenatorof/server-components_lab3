@@ -1,19 +1,10 @@
-# Лабораторна робота №1: Технології розроблення серверних компонентів
+## Індивідуальне завдання (Лабораторна робота №3)
 
-Веб-застосунок на Java 21 (Spring Boot) із системними ендпоінтами перевірки стану (Liveness/Readiness), мультистадійною контейнеризацією Docker та CI-пайплайном GitHub Actions.
-
-## Системні ендпоінти (Healthcheck API)
-
-* **Liveness probe:** `GET http://localhost:8080/healthz/live` — перевіряє життєздатність процесу застосунку.
-* **Readiness probe:** `GET http://localhost:8080/healthz/ready` — перевіряє готовність сервісу до обробки мережевого трафіку.
-
-## Локальний запуск через Docker Compose
-
-### Передумови
-* Встановлений **Docker** та **Docker Compose** (наприклад, Docker Desktop для Windows/macOS або Docker Engine для Linux).
-
-### Інструкція із запуску
-1. Склонуйте репозиторій та перейдіть у директорію проєкту:
-   ```bash
-   git clone [https://github.com/termenatorof/server-components.git](https://github.com/termenatorof/server-components.git)
-   cd server-components
+* **Порядковий номер у списку групи ($N$):** `19`
+* **Розрахунок варіанту:** $V = (N \bmod 3) + 1 = (19 \bmod 3) + 1 = 2$
+* **Варіант 2 — Персональні та глобальні категорії:**
+   * `POST /category` без `user_id` створює глобальну категорію (`user_id = NULL`), видиму всім користувачам.
+   * `POST /category` із `user_id` створює персональну категорію, доступну лише вказаному користувачеві.
+   * `GET /category` повертає лише глобальні категорії; `GET /category?user_id=1` повертає глобальні та персональні категорії користувача `1`.
+   * `POST /record` повертає `400 Bad Request` при спробі використати чужу персональну категорію.
+   * `DELETE /category/{category_id}?user_id=1` дозволяє видалити персональну категорію лише її власникові.
